@@ -72,7 +72,7 @@ end
 local function offload(path)
     local parts, name = plugin:relParts(path)
     last_result = nil
-    Job.add({ plugin:offloadTask(path, parts, name, "Kobo Bibliothek") })
+    Job.add({ plugin:offloadTask(path, parts, name, "KOReader Library") })
 end
 
 local BIG = string.rep("ABCDEFGH", 128 * 1024) .. "ende" -- gut 1 MB, mehrere Stuecke
@@ -93,7 +93,7 @@ steps = {
         check("Plugin im Dateimanager geladen", plugin ~= nil)
         G_reader_settings:saveSetting("drivelibrary", { root_dir = LIB })
         check("Bibliothek aus den Einstellungen", plugin:rootDir() == LIB, plugin:rootDir())
-        check("Standard-Ordner in Drive", plugin:folderName() == "Kobo Bibliothek")
+        check("Standard-Ordner in Drive", plugin:folderName() == "KOReader Library")
 
         os.execute("rm -rf '" .. CRED .. "'")
         Api.resetSession()
@@ -113,9 +113,9 @@ steps = {
         Api.accessToken()
         check("Zugang wird zwischengespeichert", server_state().token_calls == calls)
         mode("expire=1")
-        local root = Api.ensureFolder("root", "Kobo Bibliothek", true)
+        local root = Api.ensureFolder("root", "KOReader Library", true)
         check("Abgelaufener Zugang wird automatisch erneuert", root ~= nil)
-        check("Ordner nur einmal angelegt", Api.ensureFolder("root", "Kobo Bibliothek", true) == root)
+        check("Ordner nur einmal angelegt", Api.ensureFolder("root", "KOReader Library", true) == root)
         check("Fehlender Ordner ohne Anlegen", select(2, Api.ensureFolder(root, "gibtsnicht", false)) == "not_found")
         for i = 1, 8 do Api.createFolder(root, "Ordner " .. i) end
         local list = Api.list(root)
@@ -137,7 +137,7 @@ steps = {
         check(".sdr nicht mehr in der Bibliothek", not exists(LIB .. "/comics/Akira/Band 1.sdr"))
         check("Leere Ordner entfernt", not exists(LIB .. "/comics/Akira") and not exists(LIB .. "/comics") and exists(LIB))
         check("Sicherheitskopie der .sdr", read(ARCH .. "/metadata.cbz.lua") and read(ARCH .. "/custom_metadata.lua"))
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         local dir = Api.walk(root, { "comics", "Akira" })
         check("Ordner in Drive wie auf dem Geraet", dir ~= nil)
         local remote = dir and Api.findChild(dir, "Band 1.cbz")
@@ -242,7 +242,7 @@ steps = {
     end,
     function()
         check("Serverfehler mittendrin: macht weiter", last_result and last_result.offloaded == 1 and #last_result.fail == 0, last_result and last_result.fail[1])
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         local dir = Api.walk(root, { "comics" })
         local remote = Api.findChild(dir, "Abbruch.cbz")
         check("Danach vollstaendig in Drive", remote and tonumber(remote.size) == #BIG)
@@ -261,7 +261,7 @@ steps = {
 
         -- Vorhandene Datei wird nie ueberschrieben
         write(LIB .. "/comics/Abbruch.cbz", "lokal")
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         local remote = Api.findChild(Api.walk(root, { "comics" }), "Abbruch.cbz")
         last_result = nil
         Job.add({ { kind = "download", name = remote.name, dest = LIB .. "/comics/Abbruch.cbz",
@@ -278,7 +278,7 @@ steps = {
     end,
     function()
         check("Name mit Apostroph hochgeladen", last_result and last_result.offloaded == 1, last_result and last_result.fail[1])
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         check("Name mit Apostroph wiedergefunden", Api.findChild(Api.walk(root, { "comics" }), "Domu - A Child's Dream.cbz") ~= nil)
 
         -- Abbrechen beim Hochladen
@@ -307,7 +307,7 @@ steps = {
     -- Cloud-Ansicht
     function()
         write(LIB .. "/comics/Serie/Band 2.cbz", "zwei")
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         local dir = Api.walk(root, { "comics", "Serie" }, true)
         for _, n in ipairs({ "Band 10.cbz", "Band 2.cbz", "Band 1.cbz" }) do
             if n ~= "Band 2.cbz" then
@@ -349,8 +349,8 @@ steps = {
         check("Cloud-Ansicht: gelesen aus der Sicherheitskopie", books2[1].read == true)
     end,
     function()
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
-        local b = Browser.show(plugin, root, "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
+        local b = Browser.show(plugin, root, "KOReader Library")
         check("Cloud-Ansicht geoeffnet", b.menu and UIManager:isWidgetShown(b.menu))
         local item
         for _, it in ipairs(b.menu.item_table) do if it.text == "comics" then item = it end end
@@ -510,10 +510,10 @@ steps = {
         write(LIB .. "/comics/Serie/Band 2.sdr/metadata.cbz.lua", 'return { ["last_page"] = 7 }')
         last_result = nil
         Job.add({ { kind = "syncsdr", quiet = true, file = LIB .. "/comics/Serie/Band 2.cbz", rel = { "comics", "Serie" },
-            name = "Band 2.cbz", root_name = "Kobo Bibliothek", sdr = LIB .. "/comics/Serie/Band 2.sdr" } })
+            name = "Band 2.cbz", root_name = "KOReader Library", sdr = LIB .. "/comics/Serie/Band 2.sdr" } })
     end,
     function()
-        local root = Api.ensureFolder("root", "Kobo Bibliothek")
+        local root = Api.ensureFolder("root", "KOReader Library")
         local dir = Api.walk(root, { "comics", "Serie" })
         local sdr = Api.findChild(dir, "Band 2.sdr")
         local files = sdr and Api.list(sdr.id) or {}

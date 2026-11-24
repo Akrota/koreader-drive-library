@@ -24,7 +24,7 @@ local DriveLibrary = WidgetContainer:extend{
 
 local BOOK_EXT = { cbz = true, cbr = true, cb7 = true, cbt = true, epub = true, kepub = true, pdf = true, mobi = true, azw = true, azw3 = true, djvu = true, fb2 = true }
 local SETTINGS_KEY = "drivelibrary"
-local DEFAULT_FOLDER = "Kobo Bibliothek"
+local DEFAULT_FOLDER = "KOReader Library"
 
 local function settings()
     return G_reader_settings:readSetting(SETTINGS_KEY, {})

@@ -28,7 +28,7 @@ Google Drive as a cloud library: move books and comics off the device and downlo
 - **Several at once:** mark books in selection mode, then Tools → Drive Library → "Move selected to cloud" (or the gesture for it).
 - **Optional:** after closing a finished book, ask whether to move it to the cloud.
 
-The Drive folder is called `Kobo Bibliothek` by default. Its subfolders mirror the local library. If you upload from a PC yourself, use the same folder names, then the plugin recognises the files and does not upload them twice.
+The Drive folder is called `KOReader Library` by default. Its subfolders mirror the local library. If you upload from a PC yourself, use the same folder names, then the plugin recognises the files and does not upload them twice.
 
 ## Good to know
 
@@ -47,13 +47,13 @@ The Drive folder is called `Kobo Bibliothek` by default. Its subfolders mirror t
 
 Everyone needs their own small Google Cloud project. It is free.
 
-1. **Create a project:** console.cloud.google.com → new project, e.g. "Kobo Drive".
+1. **Create a project:** console.cloud.google.com → new project, e.g. "KOReader Drive".
 2. **Enable the API:** "APIs & Services" → Library → "Google Drive API" → Enable.
 3. **Consent screen:** audience "External", enter app name and email, then **"Publish app" / "In production"**. In "Testing" status the sign-in expires after 7 days. A review by Google is not needed for personal use.
 4. **Credentials:** "Credentials" → OAuth client ID → type "Web application". Add `https://developers.google.com/oauthplayground` as an authorised redirect URI. Download the JSON file and name it `client_id.json`.
 5. **Get access:** open developers.google.com/oauthplayground. Gear icon at the top right → "Use your own OAuth credentials" → enter client ID and secret. On the left enter `https://www.googleapis.com/auth/drive`, "Authorize APIs", sign in with your account and confirm the "Google hasn't verified this app" warning (it is your own app). Then "Exchange authorization code for tokens". Copy the **refresh token** into a text file named `refresh_token.txt`.
 6. **Onto the Kobo:** put both files into `.adds/koreader/drivelibrary/` (create the folder). **Not** into the plugin folder.
-7. **Check:** Tools → Drive Library → Settings → "Check sign-in". This also creates the `Kobo Bibliothek` folder in Drive if it is missing.
+7. **Check:** Tools → Drive Library → Settings → "Check sign-in". This also creates the `KOReader Library` folder in Drive if it is missing.
 
 If the access is not used for more than 6 months it expires. Repeat step 5 and replace `refresh_token.txt`.
 
@@ -106,7 +106,7 @@ Google Drive als Cloud-Bibliothek: Bücher und Comics vom Gerät auslagern und b
 - **Mehrere auf einmal:** Im Auswahl-Modus Bücher markieren, dann Werkzeuge → Drive-Bibliothek → „Ausgewählte auslagern“ oder die Geste dafür.
 - **Optional:** Nach dem Schließen eines fertig gelesenen Buchs fragen, ob es ausgelagert werden soll.
 
-Der Ordner in Drive heißt standardmäßig `Kobo Bibliothek`. Seine Unterordner entsprechen denen der lokalen Bibliothek. Lädst du am PC selbst hoch, nimm dieselben Ordnernamen, dann erkennt das Plugin die Dateien und lädt sie nicht doppelt hoch.
+Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner entsprechen denen der lokalen Bibliothek. Lädst du am PC selbst hoch, nimm dieselben Ordnernamen, dann erkennt das Plugin die Dateien und lädt sie nicht doppelt hoch.
 
 ### Wichtig zu wissen
 

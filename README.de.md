@@ -28,7 +28,7 @@ Google Drive als Cloud-Bibliothek: Bücher und Comics vom Gerät auslagern und b
 - **Mehrere auf einmal:** Im Auswahl-Modus Bücher markieren, dann Werkzeuge → Drive-Bibliothek → „Ausgewählte auslagern“ oder die Geste dafür.
 - **Optional:** Nach dem Schließen eines fertig gelesenen Buchs fragen, ob es ausgelagert werden soll.
 
-Der Ordner in Drive heißt standardmäßig `Kobo Bibliothek`. Seine Unterordner entsprechen denen der lokalen Bibliothek. Lädst du am PC selbst hoch, nimm dieselben Ordnernamen, dann erkennt das Plugin die Dateien und lädt sie nicht doppelt hoch.
+Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner entsprechen denen der lokalen Bibliothek. Lädst du am PC selbst hoch, nimm dieselben Ordnernamen, dann erkennt das Plugin die Dateien und lädt sie nicht doppelt hoch.
 
 ## Installation
 
@@ -47,13 +47,13 @@ Der Ordner in Drive heißt standardmäßig `Kobo Bibliothek`. Seine Unterordner 
 
 Jeder braucht ein eigenes kleines Google-Cloud-Projekt. Das ist kostenlos.
 
-1. **Projekt anlegen:** console.cloud.google.com → neues Projekt, z. B. „Kobo Drive“.
+1. **Projekt anlegen:** console.cloud.google.com → neues Projekt, z. B. „KOReader Drive“.
 2. **API einschalten:** „APIs & Dienste“ → Bibliothek → „Google Drive API“ → Aktivieren.
 3. **Zustimmungsbildschirm:** Zielgruppe „Extern“, App-Name und E-Mail eintragen, dann **„App veröffentlichen“ / „In Produktion“**. Im Status „Test“ läuft die Anmeldung nach 7 Tagen ab. Eine Prüfung durch Google ist für den eigenen Gebrauch nicht nötig.
 4. **Zugangsdaten:** „Anmeldedaten“ → OAuth-Client-ID → Typ „Webanwendung“. Als autorisierte Weiterleitungs-URI eintragen: `https://developers.google.com/oauthplayground`. Die JSON-Datei herunterladen und `client_id.json` nennen.
 5. **Zugang holen:** developers.google.com/oauthplayground öffnen. Oben rechts das Zahnrad → „Use your own OAuth credentials“ → Client-ID und Secret eintragen. Links `https://www.googleapis.com/auth/drive` eintragen, „Authorize APIs“, mit deinem Konto anmelden und die Warnung „Google hat diese App nicht überprüft“ bestätigen (es ist deine eigene App). Dann „Exchange authorization code for tokens“. Den **Refresh token** in eine Textdatei `refresh_token.txt` kopieren.
 6. **Auf den Kobo:** Beide Dateien nach `.adds/koreader/drivelibrary/` legen (den Ordner anlegen). **Nicht** in den Plugin-Ordner.
-7. **Prüfen:** Werkzeuge → Drive-Bibliothek → Einstellungen → „Anmeldung prüfen“. Der Ordner `Kobo Bibliothek` wird dabei in Drive angelegt, falls er fehlt.
+7. **Prüfen:** Werkzeuge → Drive-Bibliothek → Einstellungen → „Anmeldung prüfen“. Der Ordner `KOReader Library` wird dabei in Drive angelegt, falls er fehlt.
 
 Wird der Zugang länger als 6 Monate nicht benutzt, läuft er ab. Dann Schritt 5 wiederholen und `refresh_token.txt` ersetzen.
 

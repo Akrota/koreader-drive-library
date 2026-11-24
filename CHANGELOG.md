@@ -1,5 +1,8 @@
 # Drive-Bibliothek – Änderungen
 
+## 0.5.3
+- **Der Standardordner in Drive heißt jetzt `KOReader Library`** (vorher `Kobo Bibliothek`), damit er auch für englische Nutzer und andere Geräte passt. Wer schon einen anderen Ordner benutzt, stellt ihn unter Einstellungen → „Ordner in Drive“ ein.
+
 ## 0.5.2
 - Das Vorladen des nächsten Bands scheiterte, wenn der Hintergrund-Auftrag direkt nach dem Einschalten des WLANs nicht starten konnte. Jetzt gibt es einen zweiten Versuch nach 3 s und einen weiteren Vorlade-Versuch nach 2 Minuten (höchstens 3 pro Buch).
 
