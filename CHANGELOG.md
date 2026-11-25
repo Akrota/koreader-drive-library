@@ -1,4 +1,26 @@
-# Drive-Bibliothek – Änderungen
+# Changelog – Drive Library
+
+*Deutsche Fassung weiter unten.*
+
+## 0.5.3
+- **The default folder in Drive is now called `KOReader Library`** (before: `Kobo Bibliothek`), so it also fits English users and other devices. If you already use another folder, set it under Settings → "Folder in Drive".
+
+## 0.5.2
+- Preloading the next volume failed if the background job could not start right after Wi-Fi was switched on. There is now a second attempt after 3 s and another preload attempt after 2 minutes (at most 3 per book).
+
+## 0.5.1
+- Fixed a crash when closing a comic: helper files now live in a subfolder of `cache/` (`cache/drivelibrary/`), because KOReader's page cache trips over deleted files directly in `cache/`.
+
+## 0.5
+- Jobs (download, upload) run as a separate small process (`gdl_worker.lua`) instead of a fork of KOReader. This needs far less memory (measured: at most 6 MB) and prevents crashes with large comics. Upload in 2 MB pieces.
+- Options (off by default): preload the next volume in the background, move finished volumes to the cloud automatically, back up the `.sdr` folder on close.
+
+## 0.4 and earlier
+- Selection mode, cloud view, moving to the cloud with a checksum, the `.sdr` folder goes to Drive as well.
+
+---
+
+# Deutsch
 
 ## 0.5.3
 - **Der Standardordner in Drive heißt jetzt `KOReader Library`** (vorher `Kobo Bibliothek`), damit er auch für englische Nutzer und andere Geräte passt. Wer schon einen anderen Ordner benutzt, stellt ihn unter Einstellungen → „Ordner in Drive“ ein.
