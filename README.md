@@ -2,9 +2,6 @@
 
 *Deutsch: [README.de.md](README.de.md)*
 
-<!-- byline -->
-A plugin by **Akrota and Claude**.
-
 <!-- lang-note -->
 *Works in **English and German**: menus and texts follow KOReader's language. A German description is at the bottom of this page.*
 
@@ -75,7 +72,7 @@ There is no warranty and no fixed support. Bug reports are welcome as an [issue]
 
 The idea of getting access through the OAuth Playground comes from [gdrive.koplugin](https://github.com/moohaad/gdrive.koplugin) by moohaad (MIT). No code was taken.
 
-## More plugins by Akrota and Claude
+## More plugins
 
 - [Comic Display](https://github.com/Akrota/koreader-comic-display): Refresh against ghosting, dark borders and a clock for comics
 - [Levels / Tonwerte](https://github.com/Akrota/koreader-comic-levels): Tone curve for comics
