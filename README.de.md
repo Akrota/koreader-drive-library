@@ -30,7 +30,7 @@ Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner
 ## Installation
 
 1. ZIP aus den [Releases](../../releases) laden und entpacken, oder das Projekt herunterladen.
-2. Den Ordner **`drivelibrary.koplugin`** nach `koreader/plugins/` kopieren (Kobo: `.adds/koreader/plugins/`).
+2. Den Ordner **`drivelibrary.koplugin`** nach `koreader/plugins/` kopieren (auf dem Kobo zum Beispiel `.adds/koreader/plugins/`).
 3. KOReader neu starten und die Einrichtung unten durchgehen.
 
 ## Wichtig zu wissen
@@ -49,7 +49,7 @@ Jeder braucht ein eigenes kleines Google-Cloud-Projekt. Das ist kostenlos.
 3. **Zustimmungsbildschirm:** Zielgruppe „Extern“, App-Name und E-Mail eintragen, dann **„App veröffentlichen“ / „In Produktion“**. Im Status „Test“ läuft die Anmeldung nach 7 Tagen ab. Eine Prüfung durch Google ist für den eigenen Gebrauch nicht nötig.
 4. **Zugangsdaten:** „Anmeldedaten“ → OAuth-Client-ID → Typ „Webanwendung“. Als autorisierte Weiterleitungs-URI eintragen: `https://developers.google.com/oauthplayground`. Die JSON-Datei herunterladen und `client_id.json` nennen.
 5. **Zugang holen:** developers.google.com/oauthplayground öffnen. Oben rechts das Zahnrad → „Use your own OAuth credentials“ → Client-ID und Secret eintragen. Links `https://www.googleapis.com/auth/drive` eintragen, „Authorize APIs“, mit deinem Konto anmelden und die Warnung „Google hat diese App nicht überprüft“ bestätigen (es ist deine eigene App). Dann „Exchange authorization code for tokens“. Den **Refresh token** in eine Textdatei `refresh_token.txt` kopieren.
-6. **Auf den Kobo:** Beide Dateien nach `.adds/koreader/drivelibrary/` legen (den Ordner anlegen). **Nicht** in den Plugin-Ordner.
+6. **Auf den E-Reader:** Beide Dateien in einen Ordner `drivelibrary` im KOReader-Ordner legen (den Ordner anlegen; auf dem Kobo ist das `.adds/koreader/drivelibrary/`). **Nicht** in den Plugin-Ordner.
 7. **Prüfen:** Werkzeuge → Drive-Bibliothek → Einstellungen → „Anmeldung prüfen“. Der Ordner `KOReader Library` wird dabei in Drive angelegt, falls er fehlt.
 
 Wird der Zugang länger als 6 Monate nicht benutzt, läuft er ab. Dann Schritt 5 wiederholen und `refresh_token.txt` ersetzen.

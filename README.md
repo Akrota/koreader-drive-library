@@ -37,7 +37,7 @@ The Drive folder is called `KOReader Library` by default. Its subfolders mirror 
 ## Installation
 
 1. Download and unpack the ZIP file from [Releases](../../releases), or download this project.
-2. Copy the folder **`drivelibrary.koplugin`** into KOReader's `plugins` folder (Kobo: `.adds/koreader/plugins/`).
+2. Copy the folder **`drivelibrary.koplugin`** into KOReader's `plugins` folder (on a Kobo, for example, that is `.adds/koreader/plugins/`).
 3. Restart KOReader and do the one-time setup below.
 
 ## Setup (one time)
@@ -49,7 +49,7 @@ Everyone needs their own small Google Cloud project. It is free.
 3. **Consent screen:** audience "External", enter app name and email, then **"Publish app" / "In production"**. In "Testing" status the sign-in expires after 7 days. A review by Google is not needed for personal use.
 4. **Credentials:** "Credentials" → OAuth client ID → type "Web application". Add `https://developers.google.com/oauthplayground` as an authorised redirect URI. Download the JSON file and name it `client_id.json`.
 5. **Get access:** open developers.google.com/oauthplayground. Gear icon at the top right → "Use your own OAuth credentials" → enter client ID and secret. On the left enter `https://www.googleapis.com/auth/drive`, "Authorize APIs", sign in with your account and confirm the "Google hasn't verified this app" warning (it is your own app). Then "Exchange authorization code for tokens". Copy the **refresh token** into a text file named `refresh_token.txt`.
-6. **Onto the Kobo:** put both files into `.adds/koreader/drivelibrary/` (create the folder). **Not** into the plugin folder.
+6. **Onto the e-reader:** put both files into a folder called `drivelibrary` inside KOReader's folder (create it; on a Kobo that is `.adds/koreader/drivelibrary/`). **Not** into the plugin folder.
 7. **Check:** Tools → Drive Library → Settings → "Check sign-in". This also creates the `KOReader Library` folder in Drive if it is missing.
 
 If the access is not used for more than 6 months it expires. Repeat step 5 and replace `refresh_token.txt`.
