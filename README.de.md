@@ -54,6 +54,8 @@ Das machst du nur einmal, am Computer, in etwa 10 bis 15 Minuten. Am Ende kopier
 
 Alles ist kostenlos. Das Projekt gehört dir, also bekommt niemand sonst Zugriff auf dein Drive.
 
+> Die Links führen direkt zur richtigen Seite, du musst keine Menüs durchsuchen. Prüfe jedes Mal, dass oben auf der Seite das Projekt **KOReader Drive** ausgewählt ist.
+
 <details>
 <summary><b>Teil 1: Google-Projekt anlegen</b> (du bekommst <code>client_id.json</code>)</summary>
 

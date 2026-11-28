@@ -54,6 +54,8 @@ You only do this once, on a computer, in about 10 to 15 minutes. At the end you 
 
 Everything is free. The project is your own, so nobody else gets access to your Drive.
 
+> The links take you straight to the right page, you don't have to search through menus. Check every time that **KOReader Drive** is the selected project at the top of the page.
+
 <details>
 <summary><b>Part 1: Create your Google project</b> (you get <code>client_id.json</code>)</summary>
 
