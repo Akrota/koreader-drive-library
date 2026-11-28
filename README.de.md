@@ -44,78 +44,84 @@ Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner
 
 ## Einrichtung (einmalig)
 
-Das machst du nur einmal, es dauert etwa 10 bis 15 Minuten. Am besten am Computer.
+Das machst du nur einmal, am Computer, in etwa 10 bis 15 Minuten. Am Ende kopierst du **zwei kleine Dateien** auf den E-Reader. Klappe die drei Teile nacheinander auf:
 
-Am Ende hast du **zwei kleine Dateien** und kopierst sie auf den E-Reader:
+| Teil | Du bekommst |
+| --- | --- |
+| 1. Eigenes Google-Projekt anlegen | `client_id.json` |
+| 2. Zugriff auf dein Drive erlauben | `refresh_token.txt` |
+| 3. Beide Dateien auf den E-Reader kopieren | fertig |
 
-| Datei | Wozu | bekommst du in |
-| --- | --- | --- |
-| `client_id.json` | kennzeichnet dein eigenes Google-Projekt | Teil 1 |
-| `refresh_token.txt` | lässt das Plugin in dein Drive | Teil 2 |
+Alles ist kostenlos. Das Projekt gehört dir, also bekommt niemand sonst Zugriff auf dein Drive.
 
-Alles ist kostenlos. Du brauchst ein eigenes kleines „Projekt“ bei Google, damit außer dir niemand Zugriff auf dein Drive hat.
-
-### Teil 1: Dein Google-Projekt anlegen
+<details>
+<summary><b>Teil 1: Google-Projekt anlegen</b> (du bekommst <code>client_id.json</code>)</summary>
 
 Melde dich mit dem Google-Konto an, dessen Drive du benutzen willst.
 
-**1. Projekt anlegen**
+**1. Neues Projekt**
 - [console.cloud.google.com/projectcreate](https://console.cloud.google.com/projectcreate) öffnen
-- Name: `KOReader Drive` → **Erstellen**
-- Prüfe, dass dieses Projekt für die nächsten Schritte oben auf der Seite ausgewählt ist.
+- **Projektname:** `KOReader Drive` → **Erstellen**
+- Ab jetzt muss oben auf der Seite dieses Projekt ausgewählt sein.
 
 **2. Google Drive einschalten**
 - [Seite der Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com) öffnen
-- **Aktivieren** klicken
+- **Aktivieren**
 
-**3. Zustimmungsbildschirm einrichten** (die Seite „Möchtest du dieser App Zugriff erlauben?“)
-- [Zustimmungsbildschirm](https://console.cloud.google.com/apis/credentials/consent) öffnen
-- Zielgruppe: **Extern**
-- App-Name (z. B. `KOReader Drive`) und deine E-Mail-Adresse eintragen, speichern
-- **App veröffentlichen** klicken, sodass der Status **In Produktion** ist
+**3. App beschreiben**
+- [Google Auth Platform](https://console.cloud.google.com/auth/overview) öffnen → **Erste Schritte**
+- **App-Information:** Anwendungsname `KOReader Drive`, deine E-Mail als **Nutzersupport-E-Mail** → **Weiter**
+- **Zielgruppe:** **Extern** → **Weiter**
+- **Kontaktdaten:** deine E-Mail → **Weiter**
+- **Fertig:** der Richtlinie zu Nutzerdaten zustimmen → **Weiter** → **Erstellen**
 
-> Das Veröffentlichen nicht auslassen. Im Status „Test“ läuft deine Anmeldung nach 7 Tagen ab. Eine Prüfung durch Google ist für den eigenen Gebrauch nicht nötig.
+**4. App veröffentlichen**
+- [Zielgruppe](https://console.cloud.google.com/auth/audience) öffnen → **App veröffentlichen** → bestätigen
+- Der Veröffentlichungsstatus ist jetzt **In Produktion**
 
-**4. Erste Datei erzeugen: `client_id.json`**
-- [Anmeldedaten](https://console.cloud.google.com/apis/credentials) öffnen
-- **Anmeldedaten erstellen** → **OAuth-Client-ID**
-- Anwendungstyp: **Webanwendung**
-- Unter **Autorisierte Weiterleitungs-URIs** genau diese Adresse hinzufügen:
+> Nicht auslassen. Im Status „Test“ läuft deine Anmeldung nach 7 Tagen ab. Für den eigenen Gebrauch brauchst du keine Prüfung durch Google.
+
+**5. Erste Datei erzeugen**
+- [Clients](https://console.cloud.google.com/auth/clients) öffnen → **Client erstellen**
+- **Anwendungstyp:** **Webanwendung**
+- Unter **Autorisierte Weiterleitungs-URIs** → **URI hinzufügen**, genau diese Adresse einfügen:
   ```
   https://developers.google.com/oauthplayground
   ```
-- **Erstellen**, dann die **JSON-Datei herunterladen**
-- Die heruntergeladene Datei in `client_id.json` umbenennen
+- **Erstellen**
+- **Sofort die JSON-Datei herunterladen** und in `client_id.json` umbenennen. Den geheimen Schlüssel zeigt Google nur dieses eine Mal.
 
-Lass das Fenster offen: **Client-ID** und **Clientschlüssel** brauchst du in Teil 2.
+</details>
 
-### Teil 2: Zugriff auf dein Drive erlauben
+<details>
+<summary><b>Teil 2: Zugriff auf dein Drive erlauben</b> (du bekommst <code>refresh_token.txt</code>)</summary>
 
-So entsteht die zweite Datei, mit einem Werkzeug von Google namens „OAuth Playground“.
+Dafür gibt es das Google-Werkzeug „OAuth 2.0 Playground“ (nur auf Englisch). Bis die Änderung aus Schritt 5 wirkt, kann es 5 Minuten (selten einige Stunden) dauern.
 
-**5. Eigenes Projekt eintragen**
+**6. Eigenen Client eintragen**
 - [developers.google.com/oauthplayground](https://developers.google.com/oauthplayground) öffnen
-- Oben rechts auf das **Zahnrad** klicken
-- Haken bei **Use your own OAuth credentials** setzen
-- **Client-ID** und **Clientschlüssel** einfügen
+- **Zahnrad** (oben rechts) → Haken bei **Use your own OAuth credentials**
+- **OAuth Client ID** und **OAuth Client secret** ausfüllen. Beides steht in deiner `client_id.json` (mit einem Texteditor öffnen).
 
-**6. Zugriff erlauben**
-- Links in das Feld **Input your own scopes** einfügen:
+**7. Zugriff erlauben**
+- Unten links in das Feld **Input your own scopes** einfügen:
   ```
   https://www.googleapis.com/auth/drive
   ```
-- **Authorize APIs** klicken und anmelden
-- Google warnt „Google hat diese App nicht überprüft“. Das ist normal, es ist deine eigene App: **Erweitert** → weiter
-- Zugriff erlauben
+- **Authorize APIs** und anmelden
+- Google warnt, dass die App nicht überprüft ist. Das ist normal, es ist deine eigene App: **Erweitert** → weiter → erlauben
 
-**7. Zweite Datei erzeugen: `refresh_token.txt`**
-- **Exchange authorization code for tokens** klicken
+**8. Zweite Datei erzeugen**
+- **Exchange authorization code for tokens**
 - Den **Refresh token** kopieren (nur diesen, nicht den Access token)
 - In eine neue Textdatei einfügen und als `refresh_token.txt` speichern
 
-### Teil 3: Auf den E-Reader kopieren
+</details>
 
-**8. Beide Dateien in einen neuen Ordner `drivelibrary`** im KOReader-Ordner legen. Auf dem Kobo ist der KOReader-Ordner `.adds/koreader/` (versteckter Ordner).
+<details>
+<summary><b>Teil 3: Auf den E-Reader kopieren und testen</b></summary>
+
+**9. Beide Dateien in einen neuen Ordner `drivelibrary`** im KOReader-Ordner legen. Auf dem Kobo ist der KOReader-Ordner `.adds/koreader/` (versteckter Ordner).
 
 ```
 koreader/
@@ -126,21 +132,27 @@ koreader/
     └── drivelibrary.koplugin/   ← das Plugin (siehe Installation)
 ```
 
-> Die zwei Dateien gehören **nicht** in den Plugin-Ordner.
+Die zwei Dateien gehören **nicht** in den Plugin-Ordner.
 
-**9. Ausprobieren**
-- KOReader neu starten, WLAN verbinden
+**10. Ausprobieren**
+- KOReader neu starten und WLAN verbinden
 - Werkzeuge → **Drive-Bibliothek** → **Einstellungen** → **Anmeldung prüfen**
 - Der Ordner `KOReader Library` wird jetzt in deinem Drive angelegt, falls er fehlt. Fertig!
 
-### Wenn etwas nicht klappt
+</details>
+
+<details>
+<summary><b>Etwas klappt nicht?</b></summary>
 
 | Problem | Lösung |
 | --- | --- |
 | „Noch nicht angemeldet“ | Ordnername, beide Dateinamen und den Ort prüfen (nicht im Plugin-Ordner). Unter Windows darf die Datei nicht `refresh_token.txt.txt` heißen. |
-| `redirect_uri_mismatch` im Playground | Die Adresse aus Schritt 4 fehlt oder hat einen Tippfehler. |
-| Geht nach 7 Tagen nicht mehr | Die App wurde nicht veröffentlicht (Schritt 3). Veröffentlichen, dann Schritt 5 bis 7 wiederholen. |
-| Geht nach Monaten ohne Benutzung nicht mehr | Unbenutzter Zugang läuft nach 6 Monaten ab. Schritt 5 bis 7 wiederholen und `refresh_token.txt` ersetzen. |
+| `redirect_uri_mismatch` im Playground | Die Adresse aus Schritt 5 fehlt, hat einen Tippfehler oder wirkt noch nicht. Kurz warten. |
+| Fenster geschlossen, ohne die JSON-Datei zu laden | Einen neuen Client erstellen (Schritt 5). |
+| Geht nach 7 Tagen nicht mehr | Die App wurde nicht veröffentlicht (Schritt 4). Veröffentlichen, dann Schritt 6 bis 8 wiederholen. |
+| Geht nach Monaten ohne Benutzung nicht mehr | Unbenutzter Zugang läuft nach 6 Monaten ab. Schritt 6 bis 8 wiederholen und `refresh_token.txt` ersetzen. |
+
+</details>
 
 ## Sicherheit
 
