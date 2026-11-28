@@ -40,7 +40,8 @@ function DriveLibrary:isBook(name)
 end
 
 function DriveLibrary:rootDir()
-    local dir = settings().root_dir or G_reader_settings:readSetting("home_dir") or "/mnt/onboard/books"
+    -- Eigene Wahl, sonst KOReaders Home-Ordner, sonst (wie KOReader) der Standardordner des Geraets.
+    local dir = settings().root_dir or G_reader_settings:readSetting("home_dir") or require("device").home_dir or "."
     return (dir:gsub("/+$", ""))
 end
 
@@ -296,7 +297,7 @@ end
 
 local function free_space_text()
     local ok, util = pcall(require, "util")
-    local plugin_root = settings().root_dir or G_reader_settings:readSetting("home_dir")
+    local plugin_root = DriveLibrary.rootDir()
     if not ok or not util.diskUsage or not plugin_root then return nil end
     local ok2, usage = pcall(util.diskUsage, plugin_root)
     if ok2 and usage and usage.available and usage.available > 0 then

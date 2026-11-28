@@ -91,6 +91,14 @@ steps = {
         local FileManager = require("apps/filemanager/filemanager")
         plugin = FileManager.instance.drivelibrary
         check("Plugin im Dateimanager geladen", plugin ~= nil)
+        local old_home = G_reader_settings:readSetting("home_dir")
+        G_reader_settings:saveSetting("drivelibrary", {})
+        G_reader_settings:saveSetting("home_dir", "/work/gdltest/home/")
+        check("Ohne eigene Wahl: KOReaders Home-Ordner", plugin:rootDir() == "/work/gdltest/home", plugin:rootDir())
+        G_reader_settings:delSetting("home_dir")
+        local device_home = (require("device").home_dir or "."):gsub("/+$", "")
+        check("Ohne Home-Ordner: Standardordner des Geraets", plugin:rootDir() == device_home, plugin:rootDir())
+        if old_home then G_reader_settings:saveSetting("home_dir", old_home) end
         G_reader_settings:saveSetting("drivelibrary", { root_dir = LIB })
         check("Bibliothek aus den Einstellungen", plugin:rootDir() == LIB, plugin:rootDir())
         check("Standard-Ordner in Drive", plugin:folderName() == "KOReader Library")

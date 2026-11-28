@@ -25,6 +25,8 @@ Google Drive als Cloud-Bibliothek: Bücher und Comics vom Gerät auslagern und b
 - **Mehrere auf einmal:** Im Auswahl-Modus Bücher markieren, dann Werkzeuge → Drive-Bibliothek → „Ausgewählte auslagern“ oder die Geste dafür.
 - **Optional:** Nach dem Schließen eines fertig gelesenen Buchs fragen, ob es ausgelagert werden soll.
 
+Deine **lokale Bibliothek** ist dein KOReader-Home-Ordner, also der Ordner, in dem deine Bücher liegen. Unter Einstellungen → „Lokale Bibliothek“ kannst du einen anderen wählen.
+
 Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner entsprechen denen der lokalen Bibliothek. Lädst du am PC selbst hoch, nimm dieselben Ordnernamen, dann erkennt das Plugin die Dateien und lädt sie nicht doppelt hoch.
 
 ## Installation
@@ -42,17 +44,103 @@ Der Ordner in Drive heißt standardmäßig `KOReader Library`. Seine Unterordner
 
 ## Einrichtung (einmalig)
 
-Jeder braucht ein eigenes kleines Google-Cloud-Projekt. Das ist kostenlos.
+Das machst du nur einmal, es dauert etwa 10 bis 15 Minuten. Am besten am Computer.
 
-1. **Projekt anlegen:** console.cloud.google.com → neues Projekt, z. B. „KOReader Drive“.
-2. **API einschalten:** „APIs & Dienste“ → Bibliothek → „Google Drive API“ → Aktivieren.
-3. **Zustimmungsbildschirm:** Zielgruppe „Extern“, App-Name und E-Mail eintragen, dann **„App veröffentlichen“ / „In Produktion“**. Im Status „Test“ läuft die Anmeldung nach 7 Tagen ab. Eine Prüfung durch Google ist für den eigenen Gebrauch nicht nötig.
-4. **Zugangsdaten:** „Anmeldedaten“ → OAuth-Client-ID → Typ „Webanwendung“. Als autorisierte Weiterleitungs-URI eintragen: `https://developers.google.com/oauthplayground`. Die JSON-Datei herunterladen und `client_id.json` nennen.
-5. **Zugang holen:** developers.google.com/oauthplayground öffnen. Oben rechts das Zahnrad → „Use your own OAuth credentials“ → Client-ID und Secret eintragen. Links `https://www.googleapis.com/auth/drive` eintragen, „Authorize APIs“, mit deinem Konto anmelden und die Warnung „Google hat diese App nicht überprüft“ bestätigen (es ist deine eigene App). Dann „Exchange authorization code for tokens“. Den **Refresh token** in eine Textdatei `refresh_token.txt` kopieren.
-6. **Auf den E-Reader:** Beide Dateien in einen Ordner `drivelibrary` im KOReader-Ordner legen (den Ordner anlegen; auf dem Kobo ist das `.adds/koreader/drivelibrary/`). **Nicht** in den Plugin-Ordner.
-7. **Prüfen:** Werkzeuge → Drive-Bibliothek → Einstellungen → „Anmeldung prüfen“. Der Ordner `KOReader Library` wird dabei in Drive angelegt, falls er fehlt.
+Am Ende hast du **zwei kleine Dateien** und kopierst sie auf den E-Reader:
 
-Wird der Zugang länger als 6 Monate nicht benutzt, läuft er ab. Dann Schritt 5 wiederholen und `refresh_token.txt` ersetzen.
+| Datei | Wozu | bekommst du in |
+| --- | --- | --- |
+| `client_id.json` | kennzeichnet dein eigenes Google-Projekt | Teil 1 |
+| `refresh_token.txt` | lässt das Plugin in dein Drive | Teil 2 |
+
+Alles ist kostenlos. Du brauchst ein eigenes kleines „Projekt“ bei Google, damit außer dir niemand Zugriff auf dein Drive hat.
+
+### Teil 1: Dein Google-Projekt anlegen
+
+Melde dich mit dem Google-Konto an, dessen Drive du benutzen willst.
+
+**1. Projekt anlegen**
+- [console.cloud.google.com/projectcreate](https://console.cloud.google.com/projectcreate) öffnen
+- Name: `KOReader Drive` → **Erstellen**
+- Prüfe, dass dieses Projekt für die nächsten Schritte oben auf der Seite ausgewählt ist.
+
+**2. Google Drive einschalten**
+- [Seite der Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com) öffnen
+- **Aktivieren** klicken
+
+**3. Zustimmungsbildschirm einrichten** (die Seite „Möchtest du dieser App Zugriff erlauben?“)
+- [Zustimmungsbildschirm](https://console.cloud.google.com/apis/credentials/consent) öffnen
+- Zielgruppe: **Extern**
+- App-Name (z. B. `KOReader Drive`) und deine E-Mail-Adresse eintragen, speichern
+- **App veröffentlichen** klicken, sodass der Status **In Produktion** ist
+
+> Das Veröffentlichen nicht auslassen. Im Status „Test“ läuft deine Anmeldung nach 7 Tagen ab. Eine Prüfung durch Google ist für den eigenen Gebrauch nicht nötig.
+
+**4. Erste Datei erzeugen: `client_id.json`**
+- [Anmeldedaten](https://console.cloud.google.com/apis/credentials) öffnen
+- **Anmeldedaten erstellen** → **OAuth-Client-ID**
+- Anwendungstyp: **Webanwendung**
+- Unter **Autorisierte Weiterleitungs-URIs** genau diese Adresse hinzufügen:
+  ```
+  https://developers.google.com/oauthplayground
+  ```
+- **Erstellen**, dann die **JSON-Datei herunterladen**
+- Die heruntergeladene Datei in `client_id.json` umbenennen
+
+Lass das Fenster offen: **Client-ID** und **Clientschlüssel** brauchst du in Teil 2.
+
+### Teil 2: Zugriff auf dein Drive erlauben
+
+So entsteht die zweite Datei, mit einem Werkzeug von Google namens „OAuth Playground“.
+
+**5. Eigenes Projekt eintragen**
+- [developers.google.com/oauthplayground](https://developers.google.com/oauthplayground) öffnen
+- Oben rechts auf das **Zahnrad** klicken
+- Haken bei **Use your own OAuth credentials** setzen
+- **Client-ID** und **Clientschlüssel** einfügen
+
+**6. Zugriff erlauben**
+- Links in das Feld **Input your own scopes** einfügen:
+  ```
+  https://www.googleapis.com/auth/drive
+  ```
+- **Authorize APIs** klicken und anmelden
+- Google warnt „Google hat diese App nicht überprüft“. Das ist normal, es ist deine eigene App: **Erweitert** → weiter
+- Zugriff erlauben
+
+**7. Zweite Datei erzeugen: `refresh_token.txt`**
+- **Exchange authorization code for tokens** klicken
+- Den **Refresh token** kopieren (nur diesen, nicht den Access token)
+- In eine neue Textdatei einfügen und als `refresh_token.txt` speichern
+
+### Teil 3: Auf den E-Reader kopieren
+
+**8. Beide Dateien in einen neuen Ordner `drivelibrary`** im KOReader-Ordner legen. Auf dem Kobo ist der KOReader-Ordner `.adds/koreader/` (versteckter Ordner).
+
+```
+koreader/
+├── drivelibrary/                ← diesen Ordner anlegen
+│   ├── client_id.json
+│   └── refresh_token.txt
+└── plugins/
+    └── drivelibrary.koplugin/   ← das Plugin (siehe Installation)
+```
+
+> Die zwei Dateien gehören **nicht** in den Plugin-Ordner.
+
+**9. Ausprobieren**
+- KOReader neu starten, WLAN verbinden
+- Werkzeuge → **Drive-Bibliothek** → **Einstellungen** → **Anmeldung prüfen**
+- Der Ordner `KOReader Library` wird jetzt in deinem Drive angelegt, falls er fehlt. Fertig!
+
+### Wenn etwas nicht klappt
+
+| Problem | Lösung |
+| --- | --- |
+| „Noch nicht angemeldet“ | Ordnername, beide Dateinamen und den Ort prüfen (nicht im Plugin-Ordner). Unter Windows darf die Datei nicht `refresh_token.txt.txt` heißen. |
+| `redirect_uri_mismatch` im Playground | Die Adresse aus Schritt 4 fehlt oder hat einen Tippfehler. |
+| Geht nach 7 Tagen nicht mehr | Die App wurde nicht veröffentlicht (Schritt 3). Veröffentlichen, dann Schritt 5 bis 7 wiederholen. |
+| Geht nach Monaten ohne Benutzung nicht mehr | Unbenutzter Zugang läuft nach 6 Monaten ab. Schritt 5 bis 7 wiederholen und `refresh_token.txt` ersetzen. |
 
 ## Sicherheit
 

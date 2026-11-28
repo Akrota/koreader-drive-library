@@ -2,6 +2,10 @@
 
 *Deutsche Fassung weiter unten.*
 
+## 0.5.4
+- If no KOReader home folder is set, the plugin now uses the device's default folder (as KOReader does) instead of a Kobo-only path.
+- README: easier setup guide, and a note on which folder is used as the local library.
+
 ## 0.5.3
 - **The default folder in Drive is now called `KOReader Library`** (before: `Kobo Bibliothek`), so it also fits English users and other devices. If you already use another folder, set it under Settings → "Folder in Drive".
 
@@ -21,6 +25,10 @@
 ---
 
 # Deutsch
+
+## 0.5.4
+- Ist in KOReader kein Home-Ordner eingestellt, nimmt das Plugin jetzt den Standardordner des Geräts (wie KOReader) statt eines Pfads, den es nur auf dem Kobo gibt.
+- README: einfachere Einrichtungs-Anleitung und ein Hinweis, welcher Ordner die lokale Bibliothek ist.
 
 ## 0.5.3
 - **Der Standardordner in Drive heißt jetzt `KOReader Library`** (vorher `Kobo Bibliothek`), damit er auch für englische Nutzer und andere Geräte passt. Wer schon einen anderen Ordner benutzt, stellt ihn unter Einstellungen → „Ordner in Drive“ ein.
